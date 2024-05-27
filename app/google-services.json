@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "201138440573",
+    "project_id": "finalproject-ab4f1",
+    "storage_bucket": "finalproject-ab4f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201138440573:android:27d6fed6783566e073e414",
+        "android_client_info": {
+          "package_name": "fcu.midterm.bookstore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt6zNr1OvVhW4DJfykGi9XMSIeQ91zrR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
