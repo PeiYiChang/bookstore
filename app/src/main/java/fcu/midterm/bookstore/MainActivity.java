@@ -10,15 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity {
+    private TextView showUser;
 
     private ListView listBooks;
 
     private ImageButton account;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         account = findViewById(R.id.person);
-
+        showUser = findViewById(R.id.show_user);
         listBooks= findViewById(R.id.listBooks);
+        mAuth = FirebaseAuth.getInstance();
+
         Book book1 = new Book(R.drawable.book1,"原子習慣","館藏中");
         Book book2 = new Book(R.drawable.book2,"被討厭的勇氣","借出");
         Book book3 = new Book(R.drawable.book3,"小王子","館藏中");
@@ -44,11 +51,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, RegisterActivity.class);
+                intent.setClass(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         };
         account.setOnClickListener(listener);
 
+    }
+    private boolean isSignIn() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        return user != null;
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (isSignIn()){
+            String email = mAuth.getCurrentUser().getEmail();
+            showUser.setText("歡迎 "+email);
+        }
     }
 }
