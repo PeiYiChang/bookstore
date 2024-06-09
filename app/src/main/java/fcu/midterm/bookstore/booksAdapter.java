@@ -42,7 +42,7 @@ public class booksAdapter extends BaseAdapter {
         TextView state = view.findViewById(R.id.state);
 
         Book book = lsBooks.get(index);
-        img.setImageResource(book.getBookImgId());
+        img.setImageResource(book.getBookImg());
         name.setText(book.getBookName());
         state.setText(String.valueOf(book.getBookState()));
 

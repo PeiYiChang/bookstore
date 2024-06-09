@@ -15,6 +15,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText loginEmail;
@@ -41,10 +45,22 @@ public class LoginActivity extends AppCompatActivity {
                     String email = loginEmail.getText().toString();
                     String password = loginPassword.getText().toString();
                     signIn(email,password);
+                    storeSigninInfo("FCU App sign in ...");
                 } else if (view.getId() == R.id.btnSignup) {
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this,SignupActivity.class);
                     LoginActivity.this.startActivity(intent);
+                }
+                else if (view.getId() == R.id.btnManager) {
+                    String email = loginEmail.getText().toString();
+                    String password = loginPassword.getText().toString();
+                    if (email.equals("library@gmail.com")) {
+                        if (password.equals("fcu123")) {
+                            Intent intent = new Intent();
+                            intent.setClass(LoginActivity.this, menuManager.class);
+                            LoginActivity.this.startActivity(intent);
+                        }
+                    }
                 }
             }
         };
@@ -66,5 +82,10 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+    private void storeSigninInfo(String message){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref =database.getReference("Signin-Log");
+        ref.setValue(new Date().getTime()+": "+message);
     }
 }
