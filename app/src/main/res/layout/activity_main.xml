@@ -89,6 +89,14 @@
         app:layout_constraintStart_toEndOf="@+id/menu"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test git"
+        tools:layout_editor_absoluteX="167dp"
+        tools:layout_editor_absoluteY="25dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
