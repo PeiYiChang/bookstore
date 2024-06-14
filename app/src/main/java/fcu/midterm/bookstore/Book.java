@@ -19,6 +19,11 @@ public class Book {
         this.bookName = bookName;
         this.bookState = bookState;
     }
+    public Book(String bookImgId, String bookName, String bookState) {
+        this.bookImgId = bookImgId;
+        this.bookName = bookName;
+        this.bookState = bookState;
+    }
     public Book(String bookImgId, String bookName, String bookState,String bookAuthor,String bookPublisher,String bookIntroduce) {
         this.bookImgId = bookImgId;
         this.bookName = bookName;

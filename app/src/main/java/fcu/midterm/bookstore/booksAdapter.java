@@ -7,11 +7,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.os.Bundle;
 
 import java.util.List;
 
+
 public class booksAdapter extends BaseAdapter {
+
     private Context context;
     private List<Book> lsBooks;
     public booksAdapter(Context context, List<Book> lsBooks) {

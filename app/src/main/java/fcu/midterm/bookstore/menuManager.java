@@ -32,7 +32,7 @@ public class menuManager extends AppCompatActivity {
                     startActivity(intent);
                 } else if (v.getId()==R.id.book_status) {
                     Intent intent = new Intent();
-                    intent.setClass(menuManager.this, LoginActivity.class);
+                    intent.setClass(menuManager.this, book_state.class);
                     startActivity(intent);
                 }
             }
