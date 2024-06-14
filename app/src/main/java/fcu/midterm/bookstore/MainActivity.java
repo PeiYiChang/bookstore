@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     private TextView showUser;
+    private Button btn_find;
 
     private ListView listBooks;
 
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         account = findViewById(R.id.person);
         showUser = findViewById(R.id.show_user);
         listBooks= findViewById(R.id.listBooks);
+        btn_find = findViewById(R.id.btn_find);
         mAuth = FirebaseAuth.getInstance();
 
         Book book1 = new Book(R.drawable.book1,"原子習慣","館藏中");
@@ -50,9 +53,12 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+
+
             }
         };
         account.setOnClickListener(listener);
