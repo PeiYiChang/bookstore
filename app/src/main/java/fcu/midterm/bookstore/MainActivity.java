@@ -93,12 +93,19 @@ public class MainActivity extends AppCompatActivity {
                     intent.setClass(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
+                if(v.getId() == R.id.btn_find){
+                    intent.setClass(MainActivity.this, Search_result.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Book_Name", etSearch.getText().toString());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         };
         fabLogin.setOnClickListener(listener);
         fab_history.setOnClickListener(listener);
         fabLogout.setOnClickListener(listener);
-
+        btn_find.setOnClickListener(listener);
     }
     private boolean isSignIn() {
         FirebaseUser user = mAuth.getCurrentUser();
