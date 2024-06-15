@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -21,26 +22,30 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     private TextView showUser;
+    private EditText etSearch;
 
     private ListView listBooks;
-
-    //private ImageButton account;
     private FirebaseAuth mAuth;
-
-    private FloatingActionButton fab_login;
-    private FloatingActionButton fab_signup;
+    private FloatingActionMenu famMenu, famUser;
+    private FloatingActionButton fabLogin;
+    private FloatingActionButton fabLogout;
+    private FloatingActionButton fab_history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //account = findViewById(R.id.person);
+
+        etSearch = findViewById(R.id.et_search);
         showUser = findViewById(R.id.show_user);
         listBooks= findViewById(R.id.listBooks);
         mAuth = FirebaseAuth.getInstance();
-        fab_login = findViewById(R.id.fab_login);
-        fab_signup = findViewById(R.id.fab_signup);
+        fabLogin = findViewById(R.id.fab_login);
+        fabLogout = findViewById(R.id.fab_logout);
+        fab_history = findViewById(R.id.fabHistory);
+        famMenu = findViewById(R.id.fam_menu);
+        famUser =  findViewById(R.id.fam_user);
 
         Book book1 = new Book(R.drawable.book1,"原子習慣","館藏中");
         Book book2 = new Book(R.drawable.book2,"被討厭的勇氣","借出");
@@ -54,15 +59,42 @@ public class MainActivity extends AppCompatActivity {
         booksAdapter adapter = new booksAdapter(this,books);
         listBooks.setAdapter(adapter);
 
+        View.OnClickListener listener1 = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etSearch.setEnabled(false);
+            }
+        };
+        famMenu.setOnClickListener(listener1);
+        famUser.setOnClickListener(listener1);
+
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                if(v.getId() == R.id.fab_login && !isSignIn()){
+                    intent.setClass(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+                if(v.getId() == R.id.fab_logout && isSignIn()){
+                    mAuth.signOut();
+                    Toast.makeText(MainActivity.this, "用戶已登出", Toast.LENGTH_SHORT).show();
+                }
+
+                if(v.getId() == R.id.fabHistory && isSignIn()){
+                    intent.setClass(MainActivity.this, HistoryActivity.class);
+                    startActivity(intent);
+                }
+                if(v.getId() == R.id.fabHistory && !isSignIn()){
+                    Toast.makeText(MainActivity.this, "登入帳號以進行操作", Toast.LENGTH_SHORT).show();
+                    intent.setClass(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         };
-        fab_login.setOnClickListener(listener);
+        fabLogin.setOnClickListener(listener);
+        fab_history.setOnClickListener(listener);
+        fabLogout.setOnClickListener(listener);
 
     }
     private boolean isSignIn() {

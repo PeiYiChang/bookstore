@@ -35,6 +35,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/fam_user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:menu_colorNormal="@android:color/transparent"
         app:menu_colorPressed="#99FFFFFF"
         app:menu_colorRipple="#99FFFFFF"
@@ -46,19 +47,28 @@
             android:id="@+id/fab_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_label="首頁"
-            app:fab_size="mini"
             app:fab_colorNormal="#dbc9a0"
             app:fab_colorPressed="#e0cfa8"
-            />
+            app:fab_label="首頁"
+            app:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_orderList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_label="書籍管理"
-            app:fab_size="mini"
             app:fab_colorNormal="#dbc9a0"
-            app:fab_colorPressed="#e0cfa8"/>
+            app:fab_colorPressed="#e0cfa8"
+            app:fab_label="預借清單"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="#dbc9a0"
+            app:fab_colorPressed="#e0cfa8"
+            app:fab_label="借閱紀錄"
+            app:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>
 
     <com.github.clans.fab.FloatingActionMenu
@@ -87,10 +97,10 @@
             app:fab_colorPressed="#e0cfa8"/>
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_signup"
+            android:id="@+id/fab_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_label="註冊"
+            app:fab_label="登出"
             app:fab_size="mini"
             app:fab_colorNormal="#dbc9a0"
             app:fab_colorPressed="#e0cfa8"/>
@@ -122,10 +132,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/listBooks"
-        app:layout_constraintTop_toBottomOf="@+id/et_account" />
+        app:layout_constraintTop_toBottomOf="@+id/et_search" />
 
     <EditText
-        android:id="@+id/et_account"
+        android:id="@+id/et_search"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
@@ -147,8 +157,8 @@
         app:icon="@drawable/find"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/et_account"
-        app:layout_constraintTop_toTopOf="@+id/et_account" />
+        app:layout_constraintStart_toEndOf="@+id/et_search"
+        app:layout_constraintTop_toTopOf="@+id/et_search" />
 
     <TextView
         android:id="@+id/show_user"
