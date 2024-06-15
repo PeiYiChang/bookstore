@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bookstore"
         tools:targetApi="31">
+
         <activity
             android:name=".Search_result"
             android:exported="false" />
