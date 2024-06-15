@@ -7,24 +7,96 @@
     android:background="@drawable/back"
     tools:context=".MainActivity">
 
-    <ImageButton
-        android:id="@+id/person"
-        android:layout_width="64dp"
-        android:layout_height="59dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/user"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-    <ImageButton
-        android:id="@+id/menu"
-        android:layout_width="64dp"
-        android:layout_height="59dp"
+<!--    <ImageButton-->
+<!--        android:id="@+id/person"-->
+<!--        android:layout_width="64dp"-->
+<!--        android:layout_height="59dp"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:src="@drawable/user"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        />-->
+<!--    <ImageButton-->
+<!--        android:id="@+id/menu"-->
+<!--        android:layout_width="64dp"-->
+<!--        android:layout_height="59dp"-->
+<!--        android:layout_marginStart="4dp"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:src="@drawable/menu"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fam_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/menu"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/fam_user"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu_colorNormal="@android:color/transparent"
+        app:menu_colorPressed="#99FFFFFF"
+        app:menu_colorRipple="#99FFFFFF"
+        app:menu_icon="@drawable/menu"
+        app:menu_labels_position="right"
+        app:menu_openDirection="down">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_label="首頁"
+            app:fab_size="mini"
+            app:fab_colorNormal="#dbc9a0"
+            app:fab_colorPressed="#e0cfa8"
+            />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_label="書籍管理"
+            app:fab_size="mini"
+            app:fab_colorNormal="#dbc9a0"
+            app:fab_colorPressed="#e0cfa8"/>
+    </com.github.clans.fab.FloatingActionMenu>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fam_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintStart_toEndOf="@+id/fam_menu"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu_colorNormal="@android:color/transparent"
+        app:menu_colorPressed="#99FFFFFF"
+        app:menu_colorRipple="#99FFFFFF"
+        app:menu_icon="@drawable/user"
+        app:menu_labels_position="left"
+        app:menu_openDirection="down">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_label="登入"
+            app:fab_size="mini"
+            app:fab_colorNormal="#dbc9a0"
+            app:fab_colorPressed="#e0cfa8"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_label="註冊"
+            app:fab_size="mini"
+            app:fab_colorNormal="#dbc9a0"
+            app:fab_colorPressed="#e0cfa8"/>
+    </com.github.clans.fab.FloatingActionMenu>
+
+
 
     <ListView
         android:id="@+id/listBooks"
@@ -56,13 +128,14 @@
         android:id="@+id/et_account"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
         android:ems="10"
         android:hint="書名"
         android:inputType="text"
-        app:layout_constraintEnd_toStartOf="@+id/person"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/menu"
-        app:layout_constraintTop_toBottomOf="@+id/person" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_find"
@@ -70,8 +143,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="40dip"
-        android:text="查詢"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:icon="@drawable/find"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/et_account"
@@ -79,23 +152,13 @@
 
     <TextView
         android:id="@+id/show_user"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_width="246dp"
+        android:layout_height="25dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toStartOf="@+id/person"
-        app:layout_constraintStart_toEndOf="@+id/menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="test git"
-        tools:layout_editor_absoluteX="167dp"
-        tools:layout_editor_absoluteY="25dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

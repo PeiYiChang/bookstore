@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -22,18 +24,23 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView listBooks;
 
-    private ImageButton account;
+    //private ImageButton account;
     private FirebaseAuth mAuth;
+
+    private FloatingActionButton fab_login;
+    private FloatingActionButton fab_signup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        account = findViewById(R.id.person);
+        //account = findViewById(R.id.person);
         showUser = findViewById(R.id.show_user);
         listBooks= findViewById(R.id.listBooks);
         mAuth = FirebaseAuth.getInstance();
+        fab_login = findViewById(R.id.fab_login);
+        fab_signup = findViewById(R.id.fab_signup);
 
         Book book1 = new Book(R.drawable.book1,"原子習慣","館藏中");
         Book book2 = new Book(R.drawable.book2,"被討厭的勇氣","借出");
@@ -55,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-        account.setOnClickListener(listener);
+        fab_login.setOnClickListener(listener);
 
     }
     private boolean isSignIn() {
