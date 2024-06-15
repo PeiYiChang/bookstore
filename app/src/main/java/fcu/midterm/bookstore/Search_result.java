@@ -96,11 +96,6 @@ public class Search_result extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(Search_result.this, "沒有找到書名為 " + message + " 的書籍", Toast.LENGTH_SHORT).show();
-                    bookNameShow.setText("");
-                    bookAuthorShow.setText("");
-                    bookIntroduceShow.setText("");
-                    bookPublisherShow.setText("");
-                    bookStateShow.setText("");
                     finish();
                 }
             }
