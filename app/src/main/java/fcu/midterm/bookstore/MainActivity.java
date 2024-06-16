@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
         famUser =  findViewById(R.id.fam_user);
         fab_orderList = findViewById(R.id.fab_orderList);
 
-        Book book1 = new Book(R.drawable.book1,"原子習慣","館藏中");
-        Book book2 = new Book(R.drawable.book2,"被討厭的勇氣","借出");
-        Book book3 = new Book(R.drawable.book3,"小王子","館藏中");
-        Book book4 = new Book(R.drawable.book4,"這世界很煩，但你要很可愛","館藏中");
+        Book book1 = new Book(R.drawable.book1,"原子習慣","");
+        Book book2 = new Book(R.drawable.book2,"被討厭的勇氣","");
+        Book book3 = new Book(R.drawable.book3,"小王子","");
+        Book book4 = new Book(R.drawable.book4,"這世界很煩，但你要很可愛","");
         List<Book> books = new ArrayList<>();
         books.add(book1);
         books.add(book2);
