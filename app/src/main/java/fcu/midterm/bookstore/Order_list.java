@@ -65,7 +65,6 @@ public class Order_list extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // 处理数据库错误
                 Toast.makeText(Order_list.this, "讀取數據失敗", Toast.LENGTH_SHORT).show();
             }
         });

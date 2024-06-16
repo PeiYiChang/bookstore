@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -35,6 +36,7 @@ public class Search_result extends AppCompatActivity {
     private Button btnBorrowAdd;
     private ImageView bookImgShow;
     private StorageReference storageReference, pic_storage;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +51,11 @@ public class Search_result extends AppCompatActivity {
         bookIntroduceShow.setMovementMethod(ScrollingMovementMethod.getInstance());
         btnBorrowAdd = findViewById(R.id.add_borrow);
         bookImgShow = findViewById(R.id.imageView2);
-
+        mAuth = FirebaseAuth.getInstance();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         String message = bundle.getString("Book_Name");
-
+        String email = mAuth.getCurrentUser().getEmail();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("books");
         Query query = ref.orderByChild("bookName").equalTo(message);
@@ -79,6 +81,7 @@ public class Search_result extends AppCompatActivity {
                         bookPublisherShow.setText(bookPublisher);
                         bookStateShow.setText(bookState);
 
+
                         if (bookImgId != null && !bookImgId.isEmpty()) {
                             pic_storage = storageReference.child(bookName+".jpg");
                             try {
@@ -99,7 +102,7 @@ public class Search_result extends AppCompatActivity {
                         btnBorrowAdd.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Book book = new Book(bookImgId, bookName, bookState, bookAuthor, bookPublisher,bookIntroduce);
+                                Book book = new Book(bookName, bookState,email);
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference ref = database.getReference("borrow_list");
                                 ref.push().setValue(book);
