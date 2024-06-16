@@ -89,12 +89,11 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="64dp"
-        android:gravity="center_horizontal"
+        android:layout_marginEnd="80dp"
         android:text="借閱紀錄"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"

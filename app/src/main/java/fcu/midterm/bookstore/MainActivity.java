@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionMenu famMenu, famUser;
     private FloatingActionButton fabLogin;
     private FloatingActionButton fabLogout;
-    private FloatingActionButton fab_history;
+    private FloatingActionButton fab_history,fab_orderList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         fab_history = findViewById(R.id.fabHistory);
         famMenu = findViewById(R.id.fam_menu);
         famUser =  findViewById(R.id.fam_user);
+        fab_orderList = findViewById(R.id.fab_orderList);
 
         Book book1 = new Book(R.drawable.book1,"原子習慣","");
         Book book2 = new Book(R.drawable.book2,"被討厭的勇氣","");
@@ -93,13 +94,19 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }else if(v.getId() == R.id.btn_find){
-                    if(!etSearch.getText().equals(" ")){
-                        intent.setClass(MainActivity.this, Search_result.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("Book_Name", etSearch.getText().toString());
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
+                    intent.setClass(MainActivity.this, Search_result.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Book_Name", etSearch.getText().toString());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }else if(v.getId() == R.id.fab_orderList && isSignIn()){
+                    intent.setClass(MainActivity.this, Order_list.class);
+                    startActivity(intent);
+                }
+                if(v.getId() == R.id.fab_orderList && !isSignIn()){
+                    Toast.makeText(MainActivity.this, "登入帳號以進行操作", Toast.LENGTH_SHORT).show();
+                    intent.setClass(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 }
             }
         };
@@ -107,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         fab_history.setOnClickListener(listener);
         fabLogout.setOnClickListener(listener);
         btn_find.setOnClickListener(listener);
+        fab_orderList.setOnClickListener(listener);
     }
     private boolean isSignIn() {
         FirebaseUser user = mAuth.getCurrentUser();
