@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class HistoryActivity extends AppCompatActivity {
     private List<Map<String, String>> list_history = new ArrayList<>();
     private SimpleAdapter adapter;
     private FirebaseAuth mAuth;
+    private Button backHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +39,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         lvHistory = findViewById(R.id.lv_history);
 
-        adapter = new SimpleAdapter(this, list_history, R.layout.books_return_layout,
+        adapter = new HistoryAdapter(this, list_history, R.layout.books_return_layout,
                 new String[]{"bookName", "bookState"},
-                new int[]{R.id.name_order, R.id.order_state});
+                new int[]{R.id.tv_name_return, R.id.tv_return_state});
         lvHistory.setAdapter(adapter);
         listHistoryRecord();
     }
@@ -47,6 +49,7 @@ public class HistoryActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("borrow_history");
         mAuth = FirebaseAuth.getInstance();
+        backHome = findViewById(R.id.backhome);
         String email = mAuth.getCurrentUser().getEmail();
         ref.orderByChild("personName").equalTo(email).addValueEventListener(new ValueEventListener() {
             @Override
@@ -70,5 +73,156 @@ public class HistoryActivity extends AppCompatActivity {
                 Toast.makeText(HistoryActivity.this, "讀取數據失敗", Toast.LENGTH_SHORT).show();
             }
         });
+        backHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(HistoryActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+    public void onBorrowButtonClick2(View view) {
+        mAuth = FirebaseAuth.getInstance();
+        String email = mAuth.getCurrentUser().getEmail();
+        // 獲取書籍點擊位置
+        int position = lvHistory.getPositionForView(view);
+        if (position == ListView.INVALID_POSITION) {
+            return;
+        }
+
+        Map<String, String> bookMap = list_history.get(position);
+        String bookNameToBorrow = bookMap.get("bookName");
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        // 更新database(books)書籍狀態
+        DatabaseReference changeRef = database.getReference("books");
+        changeRef.orderByChild("bookName").equalTo(bookNameToBorrow).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ds.getRef().child("bookState").setValue(manager_addBook.State.借閱中.toString());
+                }
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新失敗", Toast.LENGTH_SHORT).show();
+            }
+        });
+        // 更新列表中的書籍狀態
+        bookMap.put("bookState", "借閱中");
+        adapter.notifyDataSetChanged();
+
+        DatabaseReference ref = database.getReference("borrow_history");
+        ref.orderByChild("bookName").equalTo(bookNameToBorrow).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ds.getRef().child("bookState").setValue(manager_addBook.State.借閱中.toString());
+                }
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新失敗", Toast.LENGTH_SHORT).show();
+            }
+        });
+        // 更新列表中的書籍狀態
+        bookMap.put("bookState", "借閱中");
+        adapter.notifyDataSetChanged();
+
+        DatabaseReference listRef = database.getReference("borrow_list");
+        listRef.orderByChild("bookName").equalTo(bookNameToBorrow).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ds.getRef().child("bookState").setValue(manager_addBook.State.借閱中.toString());
+                }
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新失敗", Toast.LENGTH_SHORT).show();
+            }
+        });
+        // 更新列表中的書籍狀態1
+        bookMap.put("bookState", "借閱中");
+        adapter.notifyDataSetChanged();
+    }
+    public void onReturnButtonClick(View view) {
+        mAuth = FirebaseAuth.getInstance();
+        String email = mAuth.getCurrentUser().getEmail();
+        // 獲取書籍點擊位置
+        int position = lvHistory.getPositionForView(view);
+        if (position == ListView.INVALID_POSITION) {
+            return;
+        }
+
+        Map<String, String> bookMap = list_history.get(position);
+        String bookNameToReturn = bookMap.get("bookName");
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("borrow_history");
+        ref.orderByChild("bookName").equalTo(bookNameToReturn).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ds.getRef().child("bookState").setValue(manager_addBook.State.館藏中.toString());
+                }
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新失敗", Toast.LENGTH_SHORT).show();
+            }
+        });
+        // 更新列表中的書籍狀態
+        bookMap.put("bookState", "館藏中");
+        adapter.notifyDataSetChanged();
+
+        DatabaseReference listRef = database.getReference("borrow_list");
+        listRef.orderByChild("bookName").equalTo(bookNameToReturn).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ds.getRef().child("bookState").setValue(manager_addBook.State.館藏中.toString());
+                }
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新失敗", Toast.LENGTH_SHORT).show();
+            }
+        });
+        // 更新列表中的書籍狀態
+        bookMap.put("bookState", "館藏中");
+        adapter.notifyDataSetChanged();
+        // 更新database(books)書籍狀態
+        DatabaseReference changeRef = database.getReference("books");
+        changeRef.orderByChild("bookName").equalTo(bookNameToReturn).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ds.getRef().child("bookState").setValue(manager_addBook.State.館藏中.toString());
+                }
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HistoryActivity.this, "書籍狀態更新失敗", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 更新列表中的書籍狀態
+        bookMap.put("bookState", "館藏中");
+        adapter.notifyDataSetChanged();
     }
 }

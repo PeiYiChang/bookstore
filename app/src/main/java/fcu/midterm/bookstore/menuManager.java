@@ -25,7 +25,7 @@ public class menuManager extends AppCompatActivity {
             public void onClick(View v) {
                 if (v.getId()==R.id.person_man) {
                     Intent intent = new Intent();
-                    intent.setClass(menuManager.this, LoginActivity.class);
+                    intent.setClass(menuManager.this, MainActivity.class);
                     startActivity(intent);
                 } else if (v.getId()==R.id.btn_add_book) {
                     Intent intent = new Intent();

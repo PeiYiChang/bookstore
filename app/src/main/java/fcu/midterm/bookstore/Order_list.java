@@ -3,6 +3,7 @@ package fcu.midterm.bookstore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +29,7 @@ public class Order_list extends AppCompatActivity {
     private List<Map<String, String>> borrow_list;
     private SimpleAdapter adapter;
     private FirebaseAuth mAuth;
-    private Button borrowInList;
+    private Button backToHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class Order_list extends AppCompatActivity {
         setContentView(R.layout.activity_order_list);
 
         borrowList = findViewById(R.id.borrow_list);
+        backToHome = findViewById(R.id.backtohome);
         mAuth = FirebaseAuth.getInstance();
         String email = mAuth.getCurrentUser().getEmail();
 
@@ -47,6 +49,14 @@ public class Order_list extends AppCompatActivity {
         borrowList.setAdapter(adapter);
 
         getAllBooks();
+        backToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(Order_list.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getAllBooks() {

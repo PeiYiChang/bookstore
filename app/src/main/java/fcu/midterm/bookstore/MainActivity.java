@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     bundle.putString("Book_Name", etSearch.getText().toString());
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    etSearch.setText("");
                 }else if(v.getId() == R.id.fab_orderList){
                     if(isSignIn()){
                         intent.setClass(MainActivity.this, Order_list.class);
