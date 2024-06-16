@@ -7,24 +7,6 @@
     android:background="@drawable/back"
     tools:context=".MainActivity">
 
-<!--    <ImageButton-->
-<!--        android:id="@+id/person"-->
-<!--        android:layout_width="64dp"-->
-<!--        android:layout_height="59dp"-->
-<!--        android:background="@android:color/transparent"-->
-<!--        android:src="@drawable/user"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        />-->
-<!--    <ImageButton-->
-<!--        android:id="@+id/menu"-->
-<!--        android:layout_width="64dp"-->
-<!--        android:layout_height="59dp"-->
-<!--        android:layout_marginStart="4dp"-->
-<!--        android:background="@android:color/transparent"-->
-<!--        android:src="@drawable/menu"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fam_menu"
