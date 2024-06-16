@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ public class Order_list extends AppCompatActivity {
     private List<Map<String, String>> borrow_list;
     private SimpleAdapter adapter;
     private FirebaseAuth mAuth;
+    private Button borrowInList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class Order_list extends AppCompatActivity {
         String email = mAuth.getCurrentUser().getEmail();
 
         borrow_list = new ArrayList<>();
-        adapter = new SimpleAdapter(this, borrow_list, R.layout.borrow_list_layout,
+        adapter = new OrderAdapter(this, borrow_list, R.layout.borrow_list_layout,
                 new String[]{"bookName", "bookState"},
                 new int[]{R.id.name_order, R.id.order_state});
 
