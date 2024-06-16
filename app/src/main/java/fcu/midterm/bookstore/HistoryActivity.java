@@ -27,6 +27,7 @@ public class HistoryActivity extends AppCompatActivity {
     private ListView lvHistory;
     private List<Map<String, String>> list_history = new ArrayList<>();
     private SimpleAdapter adapter;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +44,9 @@ public class HistoryActivity extends AppCompatActivity {
     private void listHistoryRecord(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("borrow_history");
-
-        ref.addValueEventListener(new ValueEventListener() {
+        mAuth = FirebaseAuth.getInstance();
+        String email = mAuth.getCurrentUser().getEmail();
+        ref.orderByChild("personName").equalTo(email).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list_history.clear();
