@@ -10,6 +10,7 @@ public class Book {
     private String bookAuthor;
     private String bookPublisher;
     private String bookIntroduce;
+    private String personName;
     public Book(){
 
     }
@@ -31,6 +32,20 @@ public class Book {
         this.bookAuthor = bookAuthor;
         this.bookPublisher = bookPublisher;
         this.bookIntroduce = bookIntroduce;
+    }
+    public Book(String bookName, String bookState,String bookAuthor,String personName) {
+        this.bookName = bookName;
+        this.bookState = bookState;
+        this.bookAuthor = bookAuthor;
+        this.personName = personName;
+    }
+
+    public String getpersonName() {
+        return personName;
+    }
+
+    public void setpersonName(String personName) {
+        personName = personName;
     }
 
     public String getBookIntroduce() {
