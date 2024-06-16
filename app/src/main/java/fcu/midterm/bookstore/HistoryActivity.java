@@ -37,7 +37,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         lvHistory = findViewById(R.id.lv_history);
 
-        adapter = new SimpleAdapter(this, list_history, R.layout.borrow_list_layout,
+        adapter = new SimpleAdapter(this, list_history, R.layout.books_return_layout,
                 new String[]{"bookName", "bookState"},
                 new int[]{R.id.name_order, R.id.order_state});
         lvHistory.setAdapter(adapter);
