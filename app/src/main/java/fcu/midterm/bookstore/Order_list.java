@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -25,13 +26,16 @@ public class Order_list extends AppCompatActivity {
     private ListView borrowList;
     private List<Map<String, String>> borrow_list;
     private SimpleAdapter adapter;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_list);
 
-        borrowList = findViewById(R.id.borrow_list); // 清單
+        borrowList = findViewById(R.id.borrow_list);
+        mAuth = FirebaseAuth.getInstance();
+        String email = mAuth.getCurrentUser().getEmail();
 
         borrow_list = new ArrayList<>();
         adapter = new SimpleAdapter(this, borrow_list, R.layout.borrow_list_layout,
@@ -44,20 +48,25 @@ public class Order_list extends AppCompatActivity {
     }
 
     private void getAllBooks() {
+        mAuth = FirebaseAuth.getInstance();
+        String email = mAuth.getCurrentUser().getEmail();
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("borrow_list");
 
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.orderByChild("personName").equalTo(email).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 borrow_list.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Book book = ds.getValue(Book.class);
                     if (book != null) {
-                        Map<String, String> map = new HashMap<>();
-                        map.put("bookName", book.getBookName());
-                        map.put("bookState", book.getBookState());
-                        borrow_list.add(map);
+
+                            Map<String, String> map = new HashMap<>();
+                            map.put("bookName", book.getBookName());
+                            map.put("bookState", book.getBookState());
+                            borrow_list.add(map);
+
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -71,6 +80,8 @@ public class Order_list extends AppCompatActivity {
     }
 
     public void onBorrowButtonClick(View view) {
+        mAuth = FirebaseAuth.getInstance();
+        String email = mAuth.getCurrentUser().getEmail();
         // 獲取書籍點擊位置
         int position = borrowList.getPositionForView(view);
         if (position == ListView.INVALID_POSITION) {
@@ -99,11 +110,10 @@ public class Order_list extends AppCompatActivity {
         });
 
         // 获取用户的名称或ID（假设您使用Firebase Authentication）
-        String personName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         String bookState = manager_addBook.State.借閱中.toString(); // 更新書籍狀態
         String bookAuthor = bookMap.get("bookAuthor");
 
-        Book book = new Book(bookNameToBorrow, bookState, bookAuthor, personName);
+        Book book = new Book(bookNameToBorrow, bookState, bookAuthor, email);
         DatabaseReference newRef = database.getReference("borrow_history");
         newRef.push().setValue(book);
 
