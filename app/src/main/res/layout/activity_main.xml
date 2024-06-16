@@ -25,14 +25,6 @@
         app:menu_labels_position="right"
         app:menu_openDirection="down">
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="#dbc9a0"
-            app:fab_colorPressed="#e0cfa8"
-            app:fab_label="首頁"
-            app:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_orderList"

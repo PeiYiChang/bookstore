@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -51,12 +52,12 @@ public class Search_result extends AppCompatActivity {
         bookIntroduceShow.setMovementMethod(ScrollingMovementMethod.getInstance());
         btnBorrowAdd = findViewById(R.id.add_borrow);
         bookImgShow = findViewById(R.id.imageView2);
-        mAuth = FirebaseAuth.getInstance();
+
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         String message = bundle.getString("Book_Name");
-        String email = mAuth.getCurrentUser().getEmail();
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("books");
         Query query = ref.orderByChild("bookName").equalTo(message);
@@ -103,17 +104,26 @@ public class Search_result extends AppCompatActivity {
                         btnBorrowAdd.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Book book = new Book(bookName, bookState,email);
-                                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                DatabaseReference ref = database.getReference("borrow_list");
-                                ref.push().setValue(book);
-                                intent.setClass(Search_result.this, Order_list.class);
-                                startActivity(intent);
+                                if (isSignIn()){
+                                    mAuth = FirebaseAuth.getInstance();
+                                    String email = mAuth.getCurrentUser().getEmail();
+                                    Book book = new Book(bookName, bookState,email);
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference ref = database.getReference("borrow_list");
+                                    ref.push().setValue(book);
+                                    intent.setClass(Search_result.this, Order_list.class);
+                                    startActivity(intent);
+                                }else {
+                                    Toast.makeText(Search_result.this, "登入帳號以進行操作", Toast.LENGTH_SHORT).show();
+                                    intent.setClass(Search_result.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
                             }
                         });
                     }
                 } else {
                     Toast.makeText(Search_result.this, "沒有找到到書名為 " + message + " 的書籍", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 
@@ -123,5 +133,10 @@ public class Search_result extends AppCompatActivity {
                 databaseError.toException().printStackTrace();
             }
         });
+    }
+    private boolean isSignIn() {
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        return user != null;
     }
 }
