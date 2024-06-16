@@ -11,7 +11,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,35 +78,34 @@ public class MainActivity extends AppCompatActivity {
                 if(v.getId() == R.id.fab_login && !isSignIn()){
                     intent.setClass(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-                }
-                if(v.getId() == R.id.fab_logout && isSignIn()){
-                    mAuth.signOut();
-                    Toast.makeText(MainActivity.this, "用戶已登出", Toast.LENGTH_SHORT).show();
-                }
-
-                if(v.getId() == R.id.fabHistory && isSignIn()){
-                    intent.setClass(MainActivity.this, HistoryActivity.class);
+                }else if(v.getId() == R.id.fab_logout){
+                    if(isSignIn()){
+                        mAuth.signOut();
+                        Toast.makeText(MainActivity.this, "用戶已登出", Toast.LENGTH_SHORT).show();
+                        showUser.setText(" ");
+                    }
+                }else if(v.getId() == R.id.fabHistory){
+                    if(isSignIn()){
+                        intent.setClass(MainActivity.this, HistoryActivity.class);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(MainActivity.this, "登入帳號以進行操作", Toast.LENGTH_SHORT).show();
+                        intent.setClass(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                }else if(v.getId() == R.id.btn_find){
+                    intent.setClass(MainActivity.this, Search_result.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Book_Name", etSearch.getText().toString());
+                    intent.putExtras(bundle);
                     startActivity(intent);
-                }
-                if(v.getId() == R.id.fabHistory && !isSignIn()){
-                    Toast.makeText(MainActivity.this, "登入帳號以進行操作", Toast.LENGTH_SHORT).show();
-                    intent.setClass(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
-                if(v.getId() == R.id.fab_orderList && isSignIn()){
+                }else if(v.getId() == R.id.fab_orderList && isSignIn()){
                     intent.setClass(MainActivity.this, Order_list.class);
                     startActivity(intent);
                 }
                 if(v.getId() == R.id.fab_orderList && !isSignIn()){
                     Toast.makeText(MainActivity.this, "登入帳號以進行操作", Toast.LENGTH_SHORT).show();
                     intent.setClass(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
-                if(v.getId() == R.id.btn_find){
-                    intent.setClass(MainActivity.this, Search_result.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("Book_Name", etSearch.getText().toString());
-                    intent.putExtras(bundle);
                     startActivity(intent);
                 }
             }
