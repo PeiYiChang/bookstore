@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -93,6 +94,15 @@ public class Search_result extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
+                        btnBorrowAdd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Book book = new Book(bookImgId, bookName, bookState, bookAuthor, bookPublisher,bookIntroduce);
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference ref = database.getReference("borrow_list");
+                                ref.push().setValue(book);
+                            }
+                        });
                     }
                 } else {
                     Toast.makeText(Search_result.this, "沒有找到書名為 " + message + " 的書籍", Toast.LENGTH_SHORT).show();
