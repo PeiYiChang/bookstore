@@ -20,8 +20,8 @@ public class Book {
         this.bookName = bookName;
         this.bookState = bookState;
     }
-    public Book(String bookImgId, String bookName, String bookState) {
-        this.bookImgId = bookImgId;
+    public Book(String bookName, String bookState,String personName ) {
+        this.personName = personName;
         this.bookName = bookName;
         this.bookState = bookState;
     }
@@ -33,6 +33,7 @@ public class Book {
         this.bookPublisher = bookPublisher;
         this.bookIntroduce = bookIntroduce;
     }
+
     public Book(String bookName, String bookState,String bookAuthor,String personName) {
         this.bookName = bookName;
         this.bookState = bookState;
