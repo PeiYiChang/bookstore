@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -21,11 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class book_state extends AppCompatActivity {
+public class manager_manageBook extends AppCompatActivity {
 
     private ListView listBooksState;
     private List<Map<String, String>> state_list;
     private SimpleAdapter adapter;
+    private enum State{
+        借閱中, 館藏中
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class book_state extends AppCompatActivity {
 
         listBooksState = findViewById(R.id.listView);
         state_list = new ArrayList<>();
-        adapter = new SimpleAdapter(this, state_list, R.layout.book_state_layout,
+        adapter = new SimpleAdapter(this, state_list, R.layout.book_state_layout_manager,
                 new String[]{"bookName", "bookState"},
                 new int[]{R.id.name_state, R.id.book_state});
 
@@ -66,7 +68,7 @@ public class book_state extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // 處理數據庫錯誤
-                Toast.makeText(book_state.this, "讀取數據失敗", Toast.LENGTH_SHORT).show();
+                Toast.makeText(manager_manageBook.this, "讀取數據失敗", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -86,12 +88,12 @@ public class book_state extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ds.getRef().removeValue();
                 }
-                Toast.makeText(book_state.this, "書籍已刪除", Toast.LENGTH_SHORT).show();
+                Toast.makeText(manager_manageBook.this, "書籍已刪除", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(book_state.this, "刪除失敗", Toast.LENGTH_SHORT).show();
+                Toast.makeText(manager_manageBook.this, "刪除失敗", Toast.LENGTH_SHORT).show();
             }
         });
     }

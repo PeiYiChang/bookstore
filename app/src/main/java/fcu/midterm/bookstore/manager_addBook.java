@@ -23,7 +23,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.Date;
 
-public class book_manager extends AppCompatActivity {
+public class manager_addBook extends AppCompatActivity {
     private EditText nameAdd;
     private EditText authorAdd;
     private EditText publisherAdd;
@@ -32,6 +32,9 @@ public class book_manager extends AppCompatActivity {
     private Button btnAddBook;
     private Button btnUploadBook;
     private ImageView showImageAdd;
+    protected enum State{
+        館藏中,借閱中
+    }
     Intent intent;
     int PICK_IMAGE_REQUEST = 1; // 修改為選擇圖片的常量
     Uri uri;
@@ -41,7 +44,7 @@ public class book_manager extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_manager);
+        setContentView(R.layout.activity_add_book_manager);
         storeSigninInfo("FCU App sign in ...");
 
         nameAdd = findViewById(R.id.book_name_add);
@@ -73,7 +76,7 @@ public class book_manager extends AppCompatActivity {
                 pic_storage.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(book_manager.this, "Image Uploaded", Toast.LENGTH_SHORT).show(); // 顯示上傳成功的消息
+                        Toast.makeText(manager_addBook.this, "Image Uploaded", Toast.LENGTH_SHORT).show(); // 顯示上傳成功的消息
                     }
                 });
             }
@@ -86,7 +89,7 @@ public class book_manager extends AppCompatActivity {
                 String bookIntroduce = introduceAdd.getText().toString();
                 String bookAuthor = authorAdd.getText().toString();
                 String bookPublisher = publisherAdd.getText().toString();
-                String bookState = "館藏中";
+                String bookState = State.館藏中.toString();
                 addBook(uri.toString(), bookName, bookState, bookAuthor, bookPublisher,bookIntroduce);
                 nameAdd.setText("");
                 introduceAdd.setText("");

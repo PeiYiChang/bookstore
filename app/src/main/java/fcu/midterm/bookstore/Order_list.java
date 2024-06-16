@@ -30,6 +30,7 @@ public class Order_list extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_list);
+
         borrowList = findViewById(R.id.borrow_list);
 
         borrow_list = new ArrayList<>();
@@ -88,10 +89,10 @@ public class Order_list extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ds.getRef().removeValue();
+
                 }
                 Toast.makeText(Order_list.this, "書籍借閱成功", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(Order_list.this, "書籍借閱失敗", Toast.LENGTH_SHORT).show();
@@ -100,7 +101,7 @@ public class Order_list extends AppCompatActivity {
 
         // 获取用户的名称或ID（假设您使用Firebase Authentication）
         String personName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        String bookState = "借閱中"; // 更新书籍状态
+        String bookState = manager_addBook.State.借閱中.toString(); // 更新书籍状态
         String bookAuthor = bookMap.get("bookAuthor");
 
         Book book = new Book(bookNameToDelete, bookState, bookAuthor, personName);

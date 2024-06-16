@@ -23,10 +23,10 @@
             android:name=".Search_result"
             android:exported="false" />
         <activity
-            android:name=".book_state"
+            android:name=".manager_manageBook"
             android:exported="false" />
         <activity
-            android:name=".book_manager"
+            android:name=".manager_addBook"
             android:exported="false" />
         <activity
             android:name=".menuManager"

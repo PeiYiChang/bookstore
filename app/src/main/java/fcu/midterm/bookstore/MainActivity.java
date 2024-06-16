@@ -53,22 +53,26 @@ public class MainActivity extends AppCompatActivity {
         Book book2 = new Book(R.drawable.book2,"被討厭的勇氣","");
         Book book3 = new Book(R.drawable.book3,"小王子","");
         Book book4 = new Book(R.drawable.book4,"這世界很煩，但你要很可愛","");
+        Book book5 = new Book(R.drawable.book5, "我可能錯了: 森林智者的最後一堂人生課", "");
         List<Book> books = new ArrayList<>();
         books.add(book1);
         books.add(book2);
         books.add(book3);
         books.add(book4);
+        books.add(book5);
         booksAdapter adapter = new booksAdapter(this,books);
         listBooks.setAdapter(adapter);
 
-        View.OnClickListener listener1 = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                etSearch.setEnabled(false);
-            }
-        };
-        famMenu.setOnClickListener(listener1);
-        famUser.setOnClickListener(listener1);
+//        View.OnClickListener listener1 = new View.OnClickListener() {
+//            boolean enable= true;
+//            @Override
+//            public void onClick(View v) {
+//                enable = !enable;
+//                etSearch.setEnabled(enable);
+//            }
+//        };
+//        famMenu.setOnClickListener(listener1);
+//        famUser.setOnClickListener(listener1);
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -99,14 +103,15 @@ public class MainActivity extends AppCompatActivity {
                     bundle.putString("Book_Name", etSearch.getText().toString());
                     intent.putExtras(bundle);
                     startActivity(intent);
-                }else if(v.getId() == R.id.fab_orderList && isSignIn()){
-                    intent.setClass(MainActivity.this, Order_list.class);
-                    startActivity(intent);
-                }
-                if(v.getId() == R.id.fab_orderList && !isSignIn()){
-                    Toast.makeText(MainActivity.this, "登入帳號以進行操作", Toast.LENGTH_SHORT).show();
-                    intent.setClass(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                }else if(v.getId() == R.id.fab_orderList){
+                    if(isSignIn()){
+                        intent.setClass(MainActivity.this, Order_list.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(MainActivity.this, "登入帳號以進行操作", Toast.LENGTH_SHORT).show();
+                        intent.setClass(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         };
