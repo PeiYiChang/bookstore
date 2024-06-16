@@ -40,7 +40,7 @@ public class Order_list extends AppCompatActivity {
         String email = mAuth.getCurrentUser().getEmail();
 
         borrow_list = new ArrayList<>();
-        adapter = new OrderAdapter(this, borrow_list, R.layout.borrow_list_layout,
+        adapter = new OrderAdapter(this, borrow_list, R.layout.books_return_layout,
                 new String[]{"bookName", "bookState"},
                 new int[]{R.id.name_order, R.id.order_state});
 
