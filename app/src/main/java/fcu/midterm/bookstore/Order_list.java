@@ -65,7 +65,7 @@ public class Order_list extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // 处理数据库错误
-                Toast.makeText(Order_list.this, "读取数据失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Order_list.this, "讀取數據失敗", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -89,12 +89,12 @@ public class Order_list extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ds.getRef().removeValue();
                 }
-                Toast.makeText(Order_list.this, "书籍借阅成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Order_list.this, "書籍借閱成功", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Order_list.this, "书籍借阅失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Order_list.this, "書籍借閱失敗", Toast.LENGTH_SHORT).show();
             }
         });
 
