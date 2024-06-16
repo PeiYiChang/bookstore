@@ -31,7 +31,7 @@ public class Order_list extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_list);
 
-        borrowList = findViewById(R.id.borrow_list);
+        borrowList = findViewById(R.id.borrow_list); // 清單
 
         borrow_list = new ArrayList<>();
         adapter = new SimpleAdapter(this, borrow_list, R.layout.borrow_list_layout,
