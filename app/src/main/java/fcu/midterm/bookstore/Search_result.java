@@ -105,7 +105,6 @@ public class Search_result extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 if (isSignIn()){
-                                    mAuth = FirebaseAuth.getInstance();
                                     String email = mAuth.getCurrentUser().getEmail();
                                     Book book = new Book(bookName, bookState,email);
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
