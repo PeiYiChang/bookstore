@@ -72,27 +72,27 @@ public class Order_list extends AppCompatActivity {
     }
 
     public void onBorrowButtonClick(View view) {
-        // 获取点击的书籍位置
+        // 獲取書籍點擊位置
         int position = borrowList.getPositionForView(view);
         if (position == ListView.INVALID_POSITION) {
             return;
         }
 
         Map<String, String> bookMap = borrow_list.get(position);
-        String bookNameToDelete = bookMap.get("bookName");
+        String bookNameToBorrow = bookMap.get("bookName");
 
-        // 从数据库中删除书籍
+        // 從database(borrow_list)中刪除此筆資料
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("borrow_list");
-        ref.orderByChild("bookName").equalTo(bookNameToDelete).addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.orderByChild("bookName").equalTo(bookNameToBorrow).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ds.getRef().removeValue();
-
                 }
                 Toast.makeText(Order_list.this, "書籍借閱成功", Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(Order_list.this, "書籍借閱失敗", Toast.LENGTH_SHORT).show();
@@ -101,11 +101,32 @@ public class Order_list extends AppCompatActivity {
 
         // 获取用户的名称或ID（假设您使用Firebase Authentication）
         String personName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        String bookState = manager_addBook.State.借閱中.toString(); // 更新书籍状态
+        String bookState = manager_addBook.State.借閱中.toString(); // 更新書籍狀態
         String bookAuthor = bookMap.get("bookAuthor");
 
-        Book book = new Book(bookNameToDelete, bookState, bookAuthor, personName);
+        Book book = new Book(bookNameToBorrow, bookState, bookAuthor, personName);
         DatabaseReference newRef = database.getReference("borrow_history");
         newRef.push().setValue(book);
+
+        // 更新database(books)書籍狀態
+        DatabaseReference changeRef = database.getReference("books");
+        changeRef.orderByChild("bookName").equalTo(bookNameToBorrow).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ds.getRef().child("bookState").setValue(manager_addBook.State.借閱中.toString());
+                }
+                Toast.makeText(Order_list.this, "書籍狀態更新成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Order_list.this, "書籍狀態更新失敗", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 更新列表中的書籍狀態
+        bookMap.put("bookState", "借閱中");
+        adapter.notifyDataSetChanged();
     }
 }
