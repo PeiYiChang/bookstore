@@ -41,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
         showUser = findViewById(R.id.show_user);
         listBooks= findViewById(R.id.listBooks);
         btn_find = findViewById(R.id.btn_find);
+
         mAuth = FirebaseAuth.getInstance();
+
         fabLogin = findViewById(R.id.fab_login);
         fabLogout = findViewById(R.id.fab_logout);
         fab_history = findViewById(R.id.fabHistory);

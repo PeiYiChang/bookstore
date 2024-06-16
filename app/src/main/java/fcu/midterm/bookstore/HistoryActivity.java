@@ -29,6 +29,7 @@ public class HistoryActivity extends AppCompatActivity {
     private ListView lvHistory;
     private List<Map<String, String>> list_history = new ArrayList<>();
     private SimpleAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

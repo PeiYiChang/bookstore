@@ -52,6 +52,7 @@ public class Search_result extends AppCompatActivity {
         btnBorrowAdd = findViewById(R.id.add_borrow);
         bookImgShow = findViewById(R.id.imageView2);
         mAuth = FirebaseAuth.getInstance();
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         String message = bundle.getString("Book_Name");
