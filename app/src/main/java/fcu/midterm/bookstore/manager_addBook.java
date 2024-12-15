@@ -32,6 +32,7 @@ public class manager_addBook extends AppCompatActivity {
     private Button btnAddBook;
     private Button btnUploadBook;
     private ImageView showImageAdd;
+
     protected enum State{
         館藏中,借閱中
     }
